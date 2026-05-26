@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나의 링크 모음</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- 
+    ==========================================
+    📝 폰트 변경 방법 (Google Fonts 사용)
+    ==========================================
+    
+    1. https://fonts.google.com 접속
+    2. 원하는 폰트 2개 선택 (소개글용 + 본문용)
+    3. 각 폰트의 스타일 선택 (Regular 400, Italic 등)
+    4. 오른쪽 "View selected families" 클릭
+    5. <link> 태그를 복사해서 아래 링크를 교체
+    6. CSS의 font-family도 변경 (아래 CSS 섹션 참고)
+    
+    ==========================================
+    -->
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Karla:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-cream: #f9f6f0;
+            --text-dark: #2a2520;
+            --accent-rust: #c17855;
+            --accent-sage: #8b9d83;
+            --paper-white: #fffcf7;
+            --shadow: rgba(42, 37, 32, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            /* 
+            📝 본문 폰트 변경:
+            font-family: '새폰트이름', sans-serif;
+            예: font-family: 'Montserrat', sans-serif;
+            */
+            font-family: 'Karla', sans-serif;
+            /* 흐릿한 배경 - 배경 이미지의 블러 처리된 버전 */
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-color: #dee6e0;
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 흐릿한 오버레이 효과 - 바깥쪽 배경을 뿌옇게 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(222, 230, 224, 0.6);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 480px;  /* 모바일 화면 크기 */
+            width: 100%;
+            min-height: 85vh;  /* 화면 높이의 85% */
+            display: flex;
+            flex-direction: column;
+            /* 컨테이너에 배경 이미지 적용 */
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-position: center;
+            border-radius: 24px;
+            padding: 4rem 2rem;  /* 세로 패딩 증가 */
+            box-shadow: 
+                0 4px 24px var(--shadow),
+                0 0 1px rgba(42, 37, 32, 0.1);
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 0.8s ease-out;
+            overflow: hidden;
+        }
+
+        /* 컨테이너 위에 살짝 밝은 오버레이 - 배경 이미지가 보이도록 투명도 낮춤 */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.15);
+            z-index: 0;
+        }
+
+        /* 컨테이너 내부 요소들이 오버레이 위에 표시되도록 */
+        .container > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 프로필 섹션 */
+        .profile {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeIn 1s ease-out 0.2s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            margin: 3rem auto 0.75rem;
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .profile-title {
+            font-family: 'Crimson Text', serif;
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        .profile-subtitle {
+            /* 
+            📝 소개글 폰트 변경:
+            font-family: '새폰트이름', serif;
+            예: font-family: 'Playfair Display', serif;
+            
+            세리프(serif): 장식이 있는 우아한 폰트
+            산세리프(sans-serif): 깔끔한 폰트
+            */
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.95rem;
+            color: #808080;
+            font-style: normal;
+            font-weight: 500;
+            opacity: 1;
+            line-height: 1.6;
+        }
+
+        /* 링크 섹션 */
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .link-item {
+            position: relative;
+            animation: slideIn 0.6s ease-out both;
+        }
+
+        .link-item:nth-child(1) { animation-delay: 0.3s; }
+        .link-item:nth-child(2) { animation-delay: 0.4s; }
+        .link-item:nth-child(3) { animation-delay: 0.5s; }
+        .link-item:nth-child(4) { animation-delay: 0.6s; }
+        .link-item:nth-child(5) { animation-delay: 0.7s; }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .link-item a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 1.5rem;
+            background: rgba(255, 255, 255, 0.6);
+            border: none;
+            border-radius: 0;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-family: 'Apple SD Gothic Neo', -apple-system, BlinkMacSystemFont, 'Malgun Gothic', sans-serif;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .link-item a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .link-item a:hover::before {
+            left: 100%;
+        }
+
+        .link-item a:hover {
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        /* 푸터 */
+        .footer {
+            text-align: center;
+            margin-top: auto;  /* 자동으로 아래쪽 배치 */
+            padding-top: 2.5rem;
+            animation: fadeIn 1s ease-out 0.8s both;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #808080;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .social-icon:hover {
+            opacity: 0.7;
+        }
+
+        .social-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .footer-text {
+            font-size: 0.85rem;
+            color: var(--accent-sage);
+            font-weight: 300;
+        }
+
+        /* 반응형 */
+        @media (max-width: 640px) {
+            body {
+                padding: 0;  /* 모바일에서 여백 제거 */
+            }
+
+            .container {
+                max-width: 100%;  /* 최대 너비 제한 제거 */
+                width: 100%;
+                min-height: 100vh;  /* 화면 전체 높이 */
+                border-radius: 0;  /* 모서리 둥글기 제거 */
+                padding: 3rem 1.5rem;  /* 모바일에서도 충분한 패딩 유지 */
+            }
+
+            .profile-title {
+                font-size: 1.75rem;
+            }
+
+            .link-item a {
+                padding: 1rem 1.25rem;
+                font-size: 0.95rem;
+            }
+        }
+
+        /* 장식 요소 */
+        .decorative-dot {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent-sage);
+            opacity: 0.3;
+        }
+
+        .decorative-dot:nth-child(1) {
+            top: 20px;
+            right: 20px;
+        }
+
+        .decorative-dot:nth-child(2) {
+            bottom: 20px;
+            left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 프로필 섹션 -->
+        <div class="profile">
+            <div class="profile-image">
+                <!-- profile.png 파일을 같은 폴더에 업로드하세요 -->
+                <img src="profile.png" alt="프로필 이미지">
+            </div>
+            <p class="profile-subtitle">Write on a papier, prost to me</p>
+        </div>
+
+        <!-- 링크 섹션 -->
+        <div class="links">
+            <div class="link-item">
+                <a href="https://analoguekeeper.notion.site/papier-prost" target="_blank">
+                    종이 및 사용된 제품 정보
+                </a>
+            </div>
+
+            <div class="link-item">
+                <a href="https://talk.naver.com/profile/c/papierprost" target="_blank">
+                    문의 Inquiry : 네이버 톡톡
+                </a>
+            </div>
+        </div>
+
+        <!-- 푸터 -->
+        <div class="footer">
+            <div class="social-icons">
+                <a href="https://instagram.com/papierprost" target="_blank" class="social-icon" aria-label="Instagram">
+                    <svg fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/>
+                    </svg>
+                </a>
+                <a href="mailto:papierprost@gmail.com" class="social-icon" aria-label="Email">
+                    <svg fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
