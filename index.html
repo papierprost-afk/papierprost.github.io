@@ -235,6 +235,16 @@
         .link-item a:hover::before {
             left: 100%;
         }
+        
+        /* 링크 사이 빈 공간 (버튼 하나 크기만큼) */
+        .link-spacer {
+            pointer-events: none;
+        }
+
+        .link-spacer a {
+            visibility: hidden;
+            pointer-events: none;
+        }
 
         .link-item a:hover {
             background: rgba(255, 255, 255, 0.6);
@@ -341,6 +351,10 @@
                 <a href="https://analoguekeeper.notion.site/papier-prost" target="_blank">
                     사용된 종이 및 제품 정보
                 </a>
+            </div>
+
+            <div class="link-item link-spacer" aria-hidden="true">
+                <a href="#" tabindex="-1">&nbsp;</a>
             </div>
 
             <div class="link-item">
